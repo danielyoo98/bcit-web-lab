@@ -8,13 +8,13 @@
   // } else {
   //   localStorage.setItem('artistList', '[]');
   // }
-  let data = fetch("/add").then((res) => {
+  let data = fetch("/artists").then((res) => {
     return res.json();
   }).then((data) => {
     console.log(data)
     if (data.length != 0) {
       data.forEach((artistObj) => {
-        addArtist(artistObj.artist, artistObj.about, artistObj.url, false);
+        addArtist(artistObj.name, artistObj.about, artistObj.image, false);
       })
     }
   })
@@ -35,8 +35,8 @@ function showToggle() {
 }
 
 const deleteUser = (event, artist, about, url) => {
-  let theArtist = {'artist': artist, 'about': about, 'url': url};
-  fetch('/delete', {
+  let theArtist = {'name': artist, 'about': about, 'image': url};
+  fetch('/artists/delete', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -54,8 +54,8 @@ function addArtist(artist = null, about = null, url = null, store = true) {
   var url = url? url : document.getElementById('imageurl').value;
 
   if (store) {
-    let theArtist = {'artist': artist, 'about': about, 'url': url};
-    fetch('/add', {
+    let theArtist = {'name': artist, 'about': about, 'image': url};
+    fetch('/artists/add', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -85,12 +85,12 @@ function searchFilter() {
   var items = document.getElementById('artists_items');
   items.textContent = '';
 
-  let retrievedArtists = fetch("/add").then((res) => {
+  let retrievedArtists = fetch("/artists").then((res) => {
     return res.json();
   }).then((data) => {
     data.forEach((artistObj) => {
-      if (isPartOfTheString(input, artistObj.artist.toUpperCase())) {
-        addArtist(artistObj.artist, artistObj.about, artistObj.url, false);
+      if (isPartOfTheString(input, artistObj.name.toUpperCase())) {
+        addArtist(artistObj.name, artistObj.about, artistObj.about, false);
       }
     })
   })
