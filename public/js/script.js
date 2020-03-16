@@ -90,7 +90,7 @@ function searchFilter() {
   }).then((data) => {
     data.forEach((artistObj) => {
       if (isPartOfTheString(input, artistObj.name.toUpperCase())) {
-        addArtist(artistObj.name, artistObj.about, artistObj.about, false);
+        addArtist(artistObj.name, artistObj.about, artistObj.image, false);
       }
     })
   })
